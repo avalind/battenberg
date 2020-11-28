@@ -1,3 +1,8 @@
+# Note
+
+This is my pesonal fork of the battenberg cnv caller, modified to
+be able to handle data from illumina arrays (processed from .idat-files using the excellent gtc2vcf tool).
+
 # Battenberg
 
 This repository contains code for the whole genome sequencing subclonal copy number caller Battenberg, as described in [Nik-Zainal, Van Loo, Wedge, et al. (2012), Cell](https://www.ncbi.nlm.nih.gov/pubmed/22608083).
