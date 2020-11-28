@@ -84,7 +84,7 @@ battenberg = function(tumourname, normalname, tumour_data_file, normal_data_file
     chrom_names = get.chrom.names(imputeinfofile, ismale)
     logr_file = paste(tumourname, "_mutantLogR_gcCorrected.tab", sep="")
     allelecounts_file = paste(tumourname, "_alleleCounts.tab", sep="")
-  } else if (data_type=="snp6" | data_type=="SNP6") {
+  } else if (data_type=="snp6" | data_type=="SNP6" | data_type=="ilmn" | data_type=="ILMN") {
     chrom_names = get.chrom.names(imputeinfofile, TRUE)
     logr_file = paste(tumourname, "_mutantLogR.tab", sep="")
     allelecounts_file = NULL
@@ -127,6 +127,14 @@ battenberg = function(tumourname, normalname, tumour_data_file, normal_data_file
                    norm.geno.clust.exe=norm.geno.clust.exe, 
                    birdseed_report_file=birdseed_report_file)
       
+    } else if (data_type=="ilmn" | data_type=="ILMN") {
+
+      prepare_ilmn(tumor_tabsep_file=tumour_data_file,
+                   normal_tabsep_file=normal_data_file,
+                   tname=tumourname,
+                   chrom_names)
+
+
     } else {
       print("Unknown data type provided, please provide wgs or snp6")
       q(save="no", status=1)

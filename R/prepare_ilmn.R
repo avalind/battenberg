@@ -4,7 +4,7 @@
 # for single sample vcfs.
 # TODO: for the corner case where the normal and tumor sample have been assayed on different
 # arrays, we need to add a check so that we only keep SNPs present on both chips.
-prepare.impute2.ilmn <- function(tabfile, annot, outfile.start, chrom, sex, imputeinfo.file) {
+prepare.impute2.ilmn <- function(tabfile, outfile.start, chrom, sex, imputeinfo.file) {
     snp.cols <- c("chrom", "pos", "id",
         "ref", "alt", "allele_a", "allele_b",
         "genotype", "baf", "lrr")
@@ -16,9 +16,6 @@ prepare.impute2.ilmn <- function(tabfile, annot, outfile.start, chrom, sex, impu
     impute.info <- parse.imputeinfofile(imputeinfo.file, sex, chrom=chrom)
     known_SNPs <- read.table(impute.info$impute_legend[1], sep=" ", header=T)
 
-    print(head(known_SNPs))
-
-    print(impute.info)
     snp.data <- snp.data[snp.data[,1]==chrom,]
     snp.data$a.allele <- ifelse(snp.data$allele_a==1,
         snp.data$alt, snp.data$ref)
@@ -72,8 +69,6 @@ parse.imputeinfofile = function(imputeinfofile, is.male, chrom=NA) {
   return(impute.info)
 }
 
-GetChromosomeBAFs_ilmn <- function(chrom, alleleFreqFile, haplotypeFile, samplename, output
-
 prepare_illumina <- function(tumor_tabsep_file, normal_tabsep_file, tname,
                              chrom_names) {
     cat("Loading tumor data...")
@@ -112,7 +107,7 @@ prepare_illumina <- function(tumor_tabsep_file, normal_tabsep_file, tname,
     write.table(nbaf, normal.baf.out, row.names=F, quote=F, sep="\t")
 
     normal.lrr.out <- paste(tname, "_germlineBAF.tab", sep="")
-
+    write.table(nlrr, normal.lrr.out, row.names=F, quote=F, sep="\t")
     # TODO
 }
 
