@@ -51,7 +51,7 @@ prepare.impute2.ilmn <- function(tabfile, outfile.start, chrom, sex, imputeinfo.
         genotypes[is.genotyped,])
     write.table(out.data, file=paste0(outfile.start,chrom,".txt"), row.names=F, col.names=F, quote=F)
 
-    # add chromosome 23 special case
+# add chromosome 23 special case
     return(het.snps)
 }
 

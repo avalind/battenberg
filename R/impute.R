@@ -143,9 +143,9 @@ combine.impute.output = function(inputfile.prefix, outputfile, is.male, imputein
 #' @author sd11
 #' @export
 run_haplotyping = function(chrom, tumourname, normalname, ismale, imputeinfofile, problemloci, impute_exe, min_normal_depth, chrom_names,
-                           snp6_reference_info_file=NA, heterozygousFilter=NA) {
+                           snp6_reference_info_file=NA, heterozygousFilter=NA, data_type=NA, tabfile=NA) {
   
-  if (file.exists(paste(tumourname, "_alleleFrequencies_chr", chrom, ".txt", sep=""))) {
+  if (data_type == "wgs" | data_type == "WGS") {
     generate.impute.input.wgs(chrom=chrom,
                               tumour.allele.counts.file=paste(tumourname,"_alleleFrequencies_chr", chrom, ".txt", sep=""),
                               normal.allele.counts.file=paste(normalname,"_alleleFrequencies_chr", chrom, ".txt", sep=""),
@@ -154,7 +154,7 @@ run_haplotyping = function(chrom, tumourname, normalname, ismale, imputeinfofile
                               is.male=ismale,
                               problemLociFile=problemloci,
                               useLociFile=NA)
-  } else {
+  } else if(data_type == "snp6" | data_type == "SNP6") {
     generate.impute.input.snp6(infile.germlineBAF=paste(tumourname, "_germlineBAF.tab", sep=""),
                                infile.tumourBAF=paste(tumourname, "_mutantBAF.tab", sep=""),
                                outFileStart=paste(tumourname, "_impute_input_chr", sep=""),
@@ -165,6 +165,10 @@ run_haplotyping = function(chrom, tumourname, normalname, ismale, imputeinfofile
                                imputeinfofile=imputeinfofile,
                                is.male=ismale,
                                heterozygousFilter=heterozygousFilter)
+  } else if (data_type == "ilmn" | data_type == "ILMN") {
+    prepare.impute2.ilmn(tabfile=tabfile,
+                         outfile.start=paste0(tumourname, "_impute_input_chr",
+    )           
   }
 
   # Run impute on the files
