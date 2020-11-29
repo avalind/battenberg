@@ -51,22 +51,11 @@ prepare.impute2.ilmn <- function(tabfile, outfile.start, chrom, sex, imputeinfo.
         genotypes[is.genotyped,])
     write.table(out.data, file=paste0(outfile.start,chrom,".txt"), row.names=F, col.names=F, quote=F)
 
-# add chromosome 23 special case
-    return(het.snps)
-}
-
-# from battenberg: copied and pasted for devel.
-parse.imputeinfofile = function(imputeinfofile, is.male, chrom=NA) {
-  impute.info = read.table(imputeinfofile, stringsAsFactors=F)
-  colnames(impute.info) = c("chrom", "impute_legend", "genetic_map", "impute_hap", "start", "end", "is_par")
-  # Remove the non-pseudo autosomal region (i.e. where not both men and woman are diploid)
-  if(is.male){ impute.info = impute.info[impute.info$is_par==1,] }
-  chr_names=unique(impute.info$chrom)
-  # Subset for a particular chromosome
-  if (!is.na(chrom)) {
-    impute.info = impute.info[impute.info$chrom==chr_names[chrom],]
-  }
-  return(impute.info)
+    if (chrom == 23) {
+        sample.g.file = paste0(outfile.start,"sample_g.txt")
+        sample_g_data = data.frame(ID_1=c(0,"INDIVI1"),ID_2=c(0,"INDIVI1"),missing=c(0,0),sex=c("D",2))
+        write.table(sample_g_data, file=sample.g.file, row.names=F, col.names=T, quote=F)
+    }
 }
 
 prepare_illumina <- function(tumor_tabsep_file, normal_tabsep_file, tname,
