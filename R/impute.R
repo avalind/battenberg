@@ -167,8 +167,7 @@ run_haplotyping = function(chrom, tumourname, normalname, ismale, imputeinfofile
                                heterozygousFilter=heterozygousFilter)
   } else if (data_type == "ilmn" | data_type == "ILMN") {
     prepare.impute2.ilmn(tabfile=tabfile,
-                         outfile.start=paste0(tumourname, "_impute_input_chr",
-    )           
+                         outfile.start=paste0(tumourname, "_impute_input_chr",))           
   }
 
   # Run impute on the files
