@@ -169,7 +169,7 @@ battenberg = function(tumourname, normalname, tumour_data_file, normal_data_file
   		                snp6_reference_info_file=snp6_reference_info_file,
   		                heterozygousFilter=heterozygousFilter,
                         data_type=data_type,
-                        tabsep_file=normalname)
+                        tabfile=normalname)
     }#, mc.cores=nthreads)
     
     # Kill the threads as from here its all single core
