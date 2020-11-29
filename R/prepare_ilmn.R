@@ -4,7 +4,7 @@
 # for single sample vcfs.
 # TODO: for the corner case where the normal and tumor sample have been assayed on different
 # arrays, we need to add a check so that we only keep SNPs present on both chips.
-prepare.impute2.ilmn <- function(tabfile, outfile.start, chrom, sex, imputeinfo.file) {
+prepare.impute2.ilmn <- function(tabfile, tumorbaf, outfile.start, chrom, sex, imputeinfo.file) {
     snp.cols <- c("chrom", "pos", "id",
         "ref", "alt", "allele_a", "allele_b",
         "genotype", "baf", "lrr")
@@ -12,6 +12,10 @@ prepare.impute2.ilmn <- function(tabfile, outfile.start, chrom, sex, imputeinfo.
     snp.data <- read.table(tabfile, sep="\t", header=F, 
         stringsAsFactors=FALSE, strip.white=TRUE)
     colnames(snp.data) <- snp.cols
+    
+    tbaf <- read.table(tumorbaf, sep="\t", header=F)
+    colnames(tbaf) <- c("chrom", "tbaf_pos", "tbaf")
+    tbaf <- tbaf[tbaf$chrom==17,]    
 
     impute.info <- parse.imputeinfofile(imputeinfo.file, sex, chrom=chrom)
     known_SNPs <- read.table(impute.info$impute_legend[1], sep=" ", header=T)
@@ -21,7 +25,9 @@ prepare.impute2.ilmn <- function(tabfile, outfile.start, chrom, sex, imputeinfo.
         snp.data$alt, snp.data$ref)
     snp.data$b.allele <- ifelse(snp.data$allele_b==1,
         snp.data$alt, snp.data$ref)
-    
+
+    snp.data <- merge(x=snp.data, y=tbaf, by.x="pos", by.y="tbaf_pos")   
+
     # fetch those in 1kG
     snp.data <- snp.data[snp.data$pos %in% known_SNPs$position,]
 
@@ -35,10 +41,14 @@ prepare.impute2.ilmn <- function(tabfile, outfile.start, chrom, sex, imputeinfo.
     is.het <- snp.data.annot$genotype == "0/1"
     is.hom.ref <- snp.data.annot$genotype=="0/0"
     is.hom.alt <- snp.data.annot$genotype=="1/1"
-    het.snps <- snp.data.annot[is.het, c("pos", "a.allele", "b.allele", "eur.maf", "id.x", "pos", "a0", "a1")]
+    het.snps <- snp.data.annot[is.het, c("pos", "a.allele", "b.allele", "tbaf", "id.x", "pos", "a0", "a1")]
     colnames(het.snps) <- c("Physical.Position", "Allele.A", "Allele.B", "allele.frequency",
         "id", "position", "a0", "a1")
-    write.csv(het.snps, file=paste0(outfile.start, chrom, "withAlleleFreq.csv", sep=""), quote=F, row.names=F)
+    
+    # flip the tbaf if necessary
+    het.snps[het.snps$Allele.a!=het.snps$a0, "tbaf"] = 1-het.snps[het.snps$Allele.a!=het.snps$a0, "tbaf"]
+
+    write.csv(het.snps, file=paste0(outfile.start, chrom, "_withAlleleFreq.csv", sep=""), quote=F, row.names=F)
 
     genotypes <- array(0, c(nrow(snp.data.annot), 3))
     genotypes[is.hom.ref, 1] = 1

@@ -149,15 +149,14 @@ battenberg = function(tumourname, normalname, tumour_data_file, normal_data_file
  
   if (!skip_phasing) {
     # Setup for parallel computing
-    clp = parallel::makeCluster(nthreads)
+    clp = parallel::makeCluster(1)
     doParallel::registerDoParallel(clp)
     cat("Starting haplotyping..\n")   
     # Reconstruct haplotypes 
     # mclapply(1:length(chrom_names), function(chrom) {
     print(length(chrom_names))
-#    foreach::foreach (chrom=1:length(chrom_names)) %dopar% {
+    foreach::foreach (chrom=1:length(chrom_names)) %dopar% {
       print(chrom)
-        cat("Haplotyping..\n")
       
       run_haplotyping(chrom=chrom, 
                       tumourname=tumourname, 
@@ -171,8 +170,8 @@ battenberg = function(tumourname, normalname, tumour_data_file, normal_data_file
   		                snp6_reference_info_file=snp6_reference_info_file,
   		                heterozygousFilter=heterozygousFilter,
                         data_type=data_type,
-                        tabfile=normalname)
-#    }#, mc.cores=nthreads)
+                        tabfile=normal_data_file)
+    }#, mc.cores=nthreads)
     
     # Kill the threads as from here its all single core
     parallel::stopCluster(clp)
