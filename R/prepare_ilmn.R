@@ -58,7 +58,7 @@ prepare.impute2.ilmn <- function(tabfile, outfile.start, chrom, sex, imputeinfo.
     }
 }
 
-prepare_illumina <- function(tumor_tabsep_file, normal_tabsep_file, tname,
+prepare_ilmn <- function(tumor_tabsep_file, normal_tabsep_file, tname,
                              chrom_names) {
     cat("Loading tumor data...")
     tumordata <- read.table(

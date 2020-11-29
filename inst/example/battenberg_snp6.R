@@ -19,12 +19,12 @@ library(Battenberg)
 NTHREADS = 8
 
 # General static
-IMPUTEINFOFILE = "/lustre/scratch116/casm/team113/sd11/reference/GenomeFiles/battenberg_impute/impute_info.txt"
-G1000PREFIX = "/lustre/scratch116/casm/team113/sd11/reference/GenomeFiles/battenberg_1000genomesloci2012/1000genomesAlleles2012_chr"
+IMPUTEINFOFILE = "/home/anders/science/mutational_timing/metadata/bb_annotation/battenberg_impute_v3/impute_info.txt"
+G1000PREFIX = "/home/anders/science/mutational_timing/metadata/bb_annotation/battenberg_1000genomesloci2012_v3/1000genomesAlleles2012_chr"
 IMPUTE_EXE = "impute2"
 
 # General SNP6 specific
-PROBLEMLOCI = NA
+PROBLEMLOCI = "/home/anders/science/mutational_timing/metadata/bb_annotation/probloci_270415.txt"
 SNP6_REF_INFO_FILE = "/lustre/scratch116/casm/team113/sd11/reference/GenomeFiles/battenberg_snp6/snp6_ref_info_file.txt"
 APT_PROBESET_GENOTYPE_EXE = "apt-probeset-genotype"
 APT_PROBESET_SUMMARIZE_EXE = "apt-probeset-summarize"
@@ -59,7 +59,7 @@ battenberg(tumourname=TUMOURNAME,
            imputeinfofile=IMPUTEINFOFILE, 
            g1000prefix=G1000PREFIX, 
            problemloci=PROBLEMLOCI, 
-           data_type="snp6",
+           data_type="ilmn",
            impute_exe=IMPUTE_EXE,
            nthreads=NTHREADS,
            platform_gamma=PLATFORM_GAMMA,
@@ -72,6 +72,7 @@ battenberg(tumourname=TUMOURNAME,
            min_ploidy=MIN_PLOIDY,
            max_ploidy=MAX_PLOIDY,
            min_rho=MIN_RHO,
+           ismale=FALSE,
            min_goodness=MIN_GOODNESS_OF_FIT,
            uninformative_BAF_threshold=BALANCED_THRESHOLD,
            calc_seg_baf_option=CALC_SEG_BAF_OPTION,
