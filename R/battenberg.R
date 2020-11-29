@@ -149,7 +149,7 @@ battenberg = function(tumourname, normalname, tumour_data_file, normal_data_file
  
   if (!skip_phasing) {
     # Setup for parallel computing
-    clp = parallel::makeCluster(1)
+    clp = parallel::makeCluster(nthreads)
     doParallel::registerDoParallel(clp)
     cat("Starting haplotyping..\n")   
     # Reconstruct haplotypes 

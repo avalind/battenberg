@@ -27,7 +27,7 @@ prepare.impute2.ilmn <- function(tabfile, tumorbaf, outfile.start, chrom, sex, i
         snp.data$alt, snp.data$ref)
 
     snp.data <- merge(x=snp.data, y=tbaf, by.x="pos", by.y="tbaf_pos")   
-
+    print(head(snp.data))
     # fetch those in 1kG
     snp.data <- snp.data[snp.data$pos %in% known_SNPs$position,]
 
@@ -45,8 +45,8 @@ prepare.impute2.ilmn <- function(tabfile, tumorbaf, outfile.start, chrom, sex, i
     colnames(het.snps) <- c("Physical.Position", "Allele.A", "Allele.B", "allele.frequency",
         "id", "position", "a0", "a1")
     
-    # flip the tbaf if necessary
-    het.snps[het.snps$Allele.a!=het.snps$a0, "tbaf"] = 1-het.snps[het.snps$Allele.a!=het.snps$a0, "tbaf"]
+    # flip the tbaf if necessary (if a0 != Allele.a)
+    het.snps[het.snps$Allele.A!=het.snps$a0, "allele.frequency"] = 1-het.snps[het.snps$Allele.A!=het.snps$a0, "allele.frequency"]
 
     write.csv(het.snps, file=paste0(outfile.start, chrom, "_withAlleleFreq.csv", sep=""), quote=F, row.names=F)
 
