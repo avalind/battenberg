@@ -46,7 +46,9 @@ prepare.impute2.ilmn <- function(tabfile, tumorbaf, outfile.start, chrom, sex, i
         "id", "position", "a0", "a1")
     
     # flip the tbaf if necessary (if a0 != Allele.a)
-    het.snps[het.snps$Allele.A!=het.snps$a0, "allele.frequency"] = 1-het.snps[het.snps$Allele.A!=het.snps$a0, "allele.frequency"]
+    het.snps$allele.frequency = ifelse(het.snps$Allele.A==het.snps$a0,
+        het.snps$allele.frequency,
+        1-het.snps$allele.frequency)
 
     write.csv(het.snps, file=paste0(outfile.start, chrom, "_withAlleleFreq.csv", sep=""), quote=F, row.names=F)
 
