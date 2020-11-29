@@ -60,7 +60,7 @@ prepare.impute2.ilmn <- function(tabfile, outfile.start, chrom, sex, imputeinfo.
 
 prepare_ilmn <- function(tumor_tabsep_file, normal_tabsep_file, tname,
                              chrom_names) {
-    cat("Loading tumor data...")
+    cat("Loading tumor data...\n")
     tumordata <- read.table(
         tumor_tabsep_file,
         sep="\t",
@@ -68,18 +68,18 @@ prepare_ilmn <- function(tumor_tabsep_file, normal_tabsep_file, tname,
         stringsAsFactors=FALSE,
         strip.white=TRUE)
 
-    cat("Processing tumor data...")
+    cat("Processing tumor data...\n")
     tbaf <- tumordata[,c(1, 2, 9)]
     tlrr <- tumordata[,c(1, 2, 10)]
 
-    cat("Writing tumor data...")
+    cat("Writing tumor data...\n")
     # do we need further error checks?
     tumor.baf.out <- paste0(tname, "_mutantBAF.tab", sep="")
     write.table(tbaf, tumor.baf.out, row.names=F, quote=F, sep="\t")
     tumor.lrr.out <- paste0(tname, "_mutantLogR.tab", sep="")
     write.table(tlrr, tumor.lrr.out, row.names=F, quote=F, sep="\t")
 
-    cat("Loading germline data...")
+    cat("Loading germline data...\n")
     germlinedata <- read.table(
         normal_tabsep_file,
         sep="\t",
@@ -87,15 +87,16 @@ prepare_ilmn <- function(tumor_tabsep_file, normal_tabsep_file, tname,
         stringsAsFactors=FALSE,
         strip.white=TRUE)
 
-    cat("Processing germline data...")
+    cat("Processing germline data...\n")
 
     nbaf <- germlinedata[,c(1, 2, 9)]
     nlrr <- germlinedata[,c(1, 2, 10)]
 
+    cat("Writing germline data...\n")
     normal.baf.out <- paste0(tname, "_germlineLogR.tab", sep="")
     write.table(nbaf, normal.baf.out, row.names=F, quote=F, sep="\t")
 
-    normal.lrr.out <- paste(tname, "_germlineBAF.tab", sep="")
+    normal.lrr.out <- paste0(tname, "_germlineBAF.tab", sep="")
     write.table(nlrr, normal.lrr.out, row.names=F, quote=F, sep="\t")
     # TODO
 }
