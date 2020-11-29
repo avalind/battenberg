@@ -15,7 +15,7 @@ prepare.impute2.ilmn <- function(tabfile, tumorbaf, outfile.start, chrom, sex, i
     
     tbaf <- read.table(tumorbaf, sep="\t", header=F)
     colnames(tbaf) <- c("chrom", "tbaf_pos", "tbaf")
-    tbaf <- tbaf[tbaf$chrom==17,]    
+    tbaf <- tbaf[tbaf$chrom==chrom,]    
 
     impute.info <- parse.imputeinfofile(imputeinfo.file, sex, chrom=chrom)
     known_SNPs <- read.table(impute.info$impute_legend[1], sep=" ", header=T)
