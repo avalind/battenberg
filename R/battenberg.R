@@ -151,11 +151,12 @@ battenberg = function(tumourname, normalname, tumour_data_file, normal_data_file
     # Setup for parallel computing
     clp = parallel::makeCluster(nthreads)
     doParallel::registerDoParallel(clp)
-    
+    cat("Starting haplotyping..\n")   
     # Reconstruct haplotypes 
     # mclapply(1:length(chrom_names), function(chrom) {
     foreach::foreach (chrom=1:length(chrom_names)) %dopar% {
       print(chrom)
+        cat("Haplotyping..\n")
       
       run_haplotyping(chrom=chrom, 
                       tumourname=tumourname, 
