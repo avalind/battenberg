@@ -13,12 +13,12 @@ prepare.impute2.ilmn <- function(tabfile, tumorbaf, outfile.start, chrom, sex, i
         stringsAsFactors=FALSE, strip.white=TRUE)
     colnames(snp.data) <- snp.cols
     
-    tbaf <- read.table(tumorbaf, sep="\t", header=F)
+    tbaf <- read.table(tumorbaf, sep="\t", header=F, stringsAsFactors=FALSE)
     colnames(tbaf) <- c("chrom", "tbaf_pos", "tbaf")
     tbaf <- tbaf[tbaf$chrom==chrom,]    
 
     impute.info <- parse.imputeinfofile(imputeinfo.file, sex, chrom=chrom)
-    known_SNPs <- read.table(impute.info$impute_legend[1], sep=" ", header=T)
+    known_SNPs <- read.table(impute.info$impute_legend[1], sep=" ", header=T, stringsAsFactors=FALSE)
 
     snp.data <- snp.data[snp.data[,1]==chrom,]
     snp.data$a.allele <- ifelse(snp.data$allele_a==1,
@@ -46,9 +46,9 @@ prepare.impute2.ilmn <- function(tabfile, tumorbaf, outfile.start, chrom, sex, i
         "id", "position", "a0", "a1")
     
     # flip the tbaf if necessary (if a0 != Allele.a)
-    het.snps$allele.frequency = ifelse(het.snps$Allele.A==het.snps$a0,
-        het.snps$allele.frequency,
-        1-het.snps$allele.frequency)
+    new_freq = ifelse(het.snps[,2]==het.snps[,7], het.snps[,4], 1.0-het.snps[,4])
+    het.snps[,4] = new_freq
+    print(new_freq)
 
     write.csv(het.snps, file=paste0(outfile.start, chrom, "_withAlleleFreq.csv", sep=""), quote=F, row.names=F)
 
