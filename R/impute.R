@@ -170,6 +170,7 @@ run_haplotyping = function(chrom, tumourname, normalname, ismale, imputeinfofile
                          tumorbaf=paste0(tumourname, "_mutantBAF.tab", sep=""),
                          outfile.start=paste0(tumourname, "_impute_input_chr"),
                          chrom=chrom,
+                         chrom_names=chrom_names,
                          sex=ismale,
                          imputeinfo.file=imputeinfofile)           
   }
