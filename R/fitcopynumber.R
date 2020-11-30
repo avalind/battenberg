@@ -40,11 +40,11 @@ fit.copy.number = function(samplename, outputfile.prefix, inputfile.baf.segmente
   
   # Read in the required data
   segmented.BAF.data = as.data.frame(read_bafsegmented(inputfile.baf.segmented))
-  raw.BAF.data = as.data.frame(read_baf(inputfile.baf, header=F))
-  raw.logR.data = as.data.frame(read_logr(inputfile.logr, header=F))
+  raw.BAF.data = as.data.frame(read_baf(inputfile.baf))
+  raw.logR.data = as.data.frame(read_logr(inputfile.logr))
   
-  colnames(raw.BAF.data) <- c("Chromosome", Position, samplename)
-  colnames(raw.logR.data) <- c("Chromosome", Position, samplename)
+  colnames(raw.BAF.data) <- c("Chromosome", "Position", samplename)
+  colnames(raw.logR.data) <- c("Chromosome", "Position", samplename)
 
   # Assign rownames as those are required by various clonal_ascat.R functions
   # If there are duplicates (possible with old versions of BB) then remove those
