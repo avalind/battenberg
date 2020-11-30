@@ -87,9 +87,9 @@ prepare_ilmn <- function(tumor_tabsep_file, normal_tabsep_file, tname,
     cat("Writing tumor data...\n")
     # do we need further error checks?
     tumor.baf.out <- paste0(tname, "_mutantBAF.tab", sep="")
-    write.table(tbaf, tumor.baf.out, row.names=F, quote=F, sep="\t")
+    write.table(tbaf, tumor.baf.out, row.names=F, header=F, quote=F, sep="\t")
     tumor.lrr.out <- paste0(tname, "_mutantLogR.tab", sep="")
-    write.table(tlrr, tumor.lrr.out, row.names=F, quote=F, sep="\t")
+    write.table(tlrr, tumor.lrr.out, row.names=F, header=F, quote=F, sep="\t")
 
     cat("Loading germline data...\n")
     germlinedata <- read.table(
@@ -106,10 +106,10 @@ prepare_ilmn <- function(tumor_tabsep_file, normal_tabsep_file, tname,
 
     cat("Writing germline data...\n")
     normal.baf.out <- paste0(tname, "_germlineLogR.tab", sep="")
-    write.table(nbaf, normal.baf.out, row.names=F, quote=F, sep="\t")
+    write.table(nbaf, normal.baf.out, row.names=F, header=F, quote=F, sep="\t")
 
     normal.lrr.out <- paste0(tname, "_germlineBAF.tab", sep="")
-    write.table(nlrr, normal.lrr.out, row.names=F, quote=F, sep="\t")
+    write.table(nlrr, normal.lrr.out, row.names=F, header=F, quote=F, sep="\t")
     # TODO
 }
 

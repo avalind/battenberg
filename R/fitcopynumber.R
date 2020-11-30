@@ -852,6 +852,7 @@ collapse_bafsegmented_to_segments = function(bafsegmented) {
 make_posthoc_plots = function(samplename, logr_file, subclones_file, rho_psi_file, bafsegmented_file, logrsegmented_file, allelecounts_file=NULL) {
   # Make some post-hoc plots
   logr = Battenberg::read_table_generic(logr_file)
+  colnames(logr) <- c("Chromosome", "Position", samplename)
   subclones = Battenberg::read_table_generic(subclones_file)
   rho_psi = read.table(rho_psi_file, header=T, stringsAsFactors=F)
   purity = rho_psi["FRAC_GENOME", "rho"]
