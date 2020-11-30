@@ -6,7 +6,7 @@ RUN_DIR = toString(args[4])
 
 NORMALNAME = NA
 SKIP_PREPROCESSING = F
-SKIP_PHASING = F
+SKIP_PHASING = T
 library(Battenberg)
 
 ###############################################################################
